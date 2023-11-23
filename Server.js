@@ -7,11 +7,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const uuid = require('uuid');
+const cors = require('cors'); // Add this line
 
 const port = 3008;
 dotenv.config();
 
 app.use('/uploads', express.static('uploads'));
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -38,6 +40,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Allow requests only from a specific origin
+const corsOptions = {
+  origin: 'https://qubithub.onrender.com/', // Replace with your allowed origin
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 const GalleryItem = mongoose.model('GalleryItem', {
   title: String,
   category: String,
@@ -63,6 +73,7 @@ const puppeteer = require('puppeteer');
 
 async function captureScreenshot(url, customScreenshotPath) {
   const browser = await puppeteer.launch({ headless: true });
+  
   const page = await browser.newPage();
 
   try {
@@ -71,7 +82,7 @@ async function captureScreenshot(url, customScreenshotPath) {
         await page.goto(url, { timeout: 40000 });
 
         // Delay the screenshot capture (60 seconds)
-        await new Promise(resolve => setTimeout(resolve, 40000));
+        await new Promise(resolve => setTimeout(resolve, 60000));
 
     // Save the screenshot with the custom path
     await page.screenshot({ path: customScreenshotPath, fullPage: false });
