@@ -43,7 +43,7 @@ const upload = multer({ storage: storage });
 
 // Allow requests only from a specific origin
 const corsOptions = {
-  origin: 'https://qubithub.onrender.com/', // Replace with your allowed origin
+  origin: 'https://qubithub.onrender.com', // Replace with your allowed origin
   optionsSuccessStatus: 200,
 };
 
