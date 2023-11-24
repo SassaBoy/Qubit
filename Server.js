@@ -70,16 +70,17 @@ const Testimonial = mongoose.model('Testimonial', {
   author: String,
   company: String,
 });
+module.exports = {
+  // Changes the cache location for Puppeteer.
+  cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+};
 
 const puppeteer = require('puppeteer');
 
 // ... (other configurations)
 
 async function captureScreenshot(url, customScreenshotPath) {
-  const browser = await puppeteer.launch({
-    headless: true,
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer')
-  });
+  const browser = await puppeteer.launch({ headless: true });
   
   const page = await browser.newPage();
 
