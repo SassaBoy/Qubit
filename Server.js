@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const uuid = require('uuid');
 const cors = require('cors'); // Add this line
+const puppeteerConfig = require('./.puppeteerrc.cjs');
 
 const port = 3008;
 dotenv.config();
@@ -70,17 +71,14 @@ const Testimonial = mongoose.model('Testimonial', {
   author: String,
   company: String,
 });
-module.exports = {
-  // Changes the cache location for Puppeteer.
-  cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-};
+
 
 const puppeteer = require('puppeteer');
 
 // ... (other configurations)
 
 async function captureScreenshot(url, customScreenshotPath) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: true,  ...puppeteerConfig, });
   
   const page = await browser.newPage();
 
