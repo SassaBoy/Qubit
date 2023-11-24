@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const dotenv = require('dotenv');
-const path = require('path');
+const { join } = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -48,6 +48,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+  // Changes the cache location for Puppeteer.
+
+
+
 const GalleryItem = mongoose.model('GalleryItem', {
   title: String,
   category: String,
@@ -72,7 +76,10 @@ const puppeteer = require('puppeteer');
 // ... (other configurations)
 
 async function captureScreenshot(url, customScreenshotPath) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer')
+  });
   
   const page = await browser.newPage();
 
