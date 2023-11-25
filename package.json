@@ -24,7 +24,6 @@
     "phantom": "^6.3.0",
     "phantomjs-prebuilt": "^2.1.16",
     "puppeteer": "^19.11.1",
-    "puppeteer-core": "^21.5.2",
     "uuid": "^9.0.1",
     "webshot": "^0.18.0"
   }
