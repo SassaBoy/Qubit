@@ -8,12 +8,13 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const uuid = require('uuid');
 const cors = require('cors'); // Add this line
-const puppeteerConfig = require('./.puppeteerrc.cjs');
+const puppeteerConfig = require('./cache/.puppeteerrc.cjs');
 
 const port = 3008;
 dotenv.config();
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads', { maxAge: 31536000000 })); // Cache for approximately 1000 years
+
 app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -43,7 +44,7 @@ const upload = multer({ storage: storage });
 
 // Allow requests only from a specific origin
 const corsOptions = {
-  origin: 'https://qubithub.onrender.com/', // Replace with your allowed origin
+  origin: 'https://qubithub.onrender.com', // Replace with your allowed origin
   optionsSuccessStatus: 200,
 };
 
