@@ -13,7 +13,8 @@ const puppeteerConfig = require('./cache/.puppeteerrc.cjs');
 const port = 3008;
 dotenv.config();
 
-app.use('/uploads', express.static('uploads', { maxAge: 31536000000 })); // Cache for approximately 1000 years
+app.use('/uploads', express.static('uploads', { maxAge: 31536000000 * 10000 }));
+ // Cache for approximately 1000 years
 
 app.use(cors());
 
